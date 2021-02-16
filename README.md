@@ -1,6 +1,6 @@
 # KmhVBAP
 
-### A convinence class for loading VBAP setups on KMH
+### A convenience class for loading VBAP setups on KMH
 
 ### Installation
 
