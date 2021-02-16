@@ -1,0 +1,58 @@
+TITLE:: KmhVBAP
+summary:: A convenience VBAP wrapper for speaker setups at KMH, Stockholm.
+categories:: UGens/Multichannel
+related:: Classes/VBAP
+
+DESCRIPTION::
+The class wraps the link::Classes/VBAP:: ugen in a singleton class. It uses a dictionary of different speaker setups, and loads the buffers needed for the VBAP class on server boot.
+
+CLASSMETHODS::
+
+METHOD:: ar
+
+ARGUMENT:: in
+The signal to be panned.
+
+ARGUMENT:: azimuth
++/- 180 degrees from the median plane (i.e. straight ahead)
+
+ARGUMENT:: elevation
++/- 90 degrees from the azimuth plane.
+
+ARGUMENT:: spread
+A value from 0-100. When 0, if the signal is panned exactly to a speaker location the signal is only on that speaker. At values higher than 0, the signal will always be on more than one speaker. This can smooth the panning effect by making localisation blur more constant.
+
+METHOD:: switchSetup
+Switch setup to another room or dimension
+
+ARGUMENT:: newRoom
+A dictionary key, currently code::\kmhLillaSalen:: or code::\kmh114:: is valid.
+
+ARGUMENT:: dim
+Number of dimensions, 2 or 3.
+
+ARGUMENT:: remapChannels
+If output channels from the VBAP UGen will be remapped so they come out in the right order for a linear routing.
+
+PRIVATE:: setup, buffer, initClass, doOnServerBoot, loadBuffers, spkrArray
+
+METHOD:: remapChannels
+If output channels from the VBAP UGen will be remapped so they come out in the right order for a linear routing.
+returns:: a link::Classes/Boolean::
+
+METHOD:: room
+Get the current room
+
+METHOD:: dimensions
+Get the current dimensions
+
+METHOD:: server
+Get and set the server to use.
+
+ARGUMENT:: newServer
+A link::Classes/Server::
+
+METHOD:: loadOnServerBoot
+Get/set automatic loading on server boot.
+
+returns:: a link::Classes/Boolean::
