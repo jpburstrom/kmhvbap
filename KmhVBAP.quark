@@ -1,0 +1,11 @@
+(
+  name: "KmhVBAP",
+  summary: "A convinence class for loading VBAP setups on KMH",
+  version: "0.001",
+  schelp: "KmhVBAP.schelp",
+  dependencies: ,
+  license: "GNU GPL v3.0",
+  copyright: "Johannes Burström",
+  ext_dependency: "",
+  url: "https://github.com/jpburstrom/myvbap"
+)
