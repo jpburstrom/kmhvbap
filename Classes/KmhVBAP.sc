@@ -58,6 +58,7 @@ KmhVBAP {
 		if (server.notNil) {
 			ServerBoot.remove(this, server);
 		};
+		server = newServer;
 		ServerBoot.add(this, server);
 
 	}
