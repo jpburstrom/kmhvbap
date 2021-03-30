@@ -81,8 +81,15 @@ KmhVBAP {
 	}
 
 	*loadBuffers {
-		buffer.free;
-		buffer = spkrArray.loadToBuffer(server);
+		fork {
+			//Wait for previous synths spawning before freeing the buffer.
+			//The synths get their data from previous buffer, avoiding crash
+			//when referencing a recently freed buffer. I think. The real
+			//fix should be a check in VBAP for empty/non-existing buffer
+			server.sync;
+			buffer.free;
+			buffer = spkrArray.loadToBuffer(server);
+		}
 	}
 
 	*doOnServerBoot {
@@ -92,7 +99,11 @@ KmhVBAP {
 	}
 
 	*ar { |in, azimuth=0.0, elevation=1.0, spread=0.0|
-		var snd = VBAP.ar(spkrArray.numSpeakers, in, buffer.bufnum, azimuth, elevation, spread);
+		var snd;
+		if (buffer.bufnum.isNil) {
+			Error("Buffer not allocated").throw;
+		};
+		snd = VBAP.ar(spkrArray.numSpeakers, in, buffer.bufnum, azimuth, elevation, spread);
 		^if (remapChannels) {
 			(setup[room][\channelMap].maxItem + 1).collect { |num|
 				setup[room][\channelMap].indexOf(num) !? snd[_] ?? { DC.ar };
